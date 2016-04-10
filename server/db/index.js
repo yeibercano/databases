@@ -5,14 +5,22 @@ var mysql = require('mysql');
 // and to the database "chat".
 // var exports = module.exports = {};
 
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: '',
-  port: 3306
+
+dbConnection = mysql.createConnection({
+      user: "root",
+      password: "",
+      database: "chat"
 });
 
-con.connect(function(err){
+// dbConnection.connect();
+
+// var tablename = "messages"; // TODO: fill this out
+
+    /* Empty the db table before each test so that multiple tests
+     * (or repeated runs of the tests) won't screw each other up: */
+    // dbConnection.query("truncate " + tablename, done);
+
+dbConnection.connect(function(err){
   if(err){
     console.log('Error connecting to Db');
     return;
@@ -20,10 +28,10 @@ con.connect(function(err){
   console.log('Connection established');
 });
 
-con.end(function(err) {
-  // The connection is terminated gracefully
-  // Ensures all previously enqueued queries are still
-  // before sending a COM_QUIT packet to the MySQL server.
-});
+// dbConnection.end(function(err) {
+//   // The connection is terminated gracefully
+//   // Ensures all previously enqueued queries are still
+//   // before sending a COM_QUIT packet to the MySQL server.
+// });
 
-exports.con = con;
+module.exports = dbConnection;
